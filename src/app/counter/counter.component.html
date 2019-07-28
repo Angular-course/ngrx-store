@@ -3,3 +3,10 @@
 <app-counter-control label="Decrement" [clicked]="decrement"></app-counter-control>
 <app-counter-control label="Add 5" [clicked]="add"></app-counter-control>
 <app-counter-control label="Subtract 5" [clicked]="subtract"></app-counter-control>
+<hr/>
+<app-counter-control label="Store Result" [clicked]="onStoreResult"></app-counter-control>
+<ul>
+    <li class="entry" *ngFor="let result of results" (click)="onDeleteResult(result.id)">
+        {{result.value}}
+    </li>
+</ul>

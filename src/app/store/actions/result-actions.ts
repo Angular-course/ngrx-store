@@ -8,7 +8,7 @@ export class StoreResult implements Action {
 
 export class DeleteResult implements Action {
     readonly type = DELETE_RESULT;
-    constructor(public id: number) {}
+    constructor(public id: Date) {}
 }
 
 export type resultActions = StoreResult | DeleteResult;

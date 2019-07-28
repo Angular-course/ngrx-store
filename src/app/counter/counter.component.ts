@@ -5,7 +5,9 @@ import {Store} from '@ngrx/store';
 // actions
 import {Add, Decrement, Increment, Subtract} from '../store/actions/counter-actions';
 // state slice of the counter
-import {CounterState} from '../store/reducers/counter-reducer';
+import {AppState} from '../store/app-reducer';
+import {ResultsArray} from '../store/reducers/result-reducer';
+import {DeleteResult, StoreResult} from '../store/actions/result-actions';
 
 @Component({
   selector: 'app-counter',
@@ -13,17 +15,20 @@ import {CounterState} from '../store/reducers/counter-reducer';
   styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  counterSubscription: Subscription;
+  resultsSubscription: Subscription;
   value: number;
+  results: ResultsArray;
 
-  constructor(private store: Store<CounterState>) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.subscription = this.store.select('counter').subscribe(val => this.value = val.counter);
+    this.counterSubscription = this.store.select('counter').subscribe(val => this.value = val.counter);
+    this.resultsSubscription = this.store.select('results').subscribe(val => this.results = val.results);
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.counterSubscription.unsubscribe();
   }
 
   increment = () => {
@@ -40,5 +45,13 @@ export class CounterComponent implements OnInit, OnDestroy {
 
   subtract = () => {
     this.store.dispatch(new Subtract(5));
+  }
+
+  onStoreResult = () => {
+    this.store.dispatch(new StoreResult(this.value));
+  }
+
+  onDeleteResult = (id: Date) => {
+    this.store.dispatch(new DeleteResult(id));
   }
 }

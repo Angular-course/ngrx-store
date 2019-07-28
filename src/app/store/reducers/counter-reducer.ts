@@ -6,19 +6,15 @@ import {counterActions} from '../actions/counter-actions';
 import {ADD, DECREMENT, INCREMENT, SUBTRACT} from '../action-types';
 
 // state definition
-interface State {
+export interface CounterState {
     counter: number;
 }
-
-// select counter state from our store
-export interface CounterState {
-    counter: State;
-}
-const initialState: State = {
+// initial state
+const initialState: CounterState = {
     counter: 0
 };
 // we must use function because function calls are not supported by AOT compilation
-export function counterReducer(state: State = initialState, action: counterActions) {
+export function counterReducer(state: CounterState = initialState, action: counterActions) {
     switch (action.type) {
         case INCREMENT:
             return updateObject(state, {counter: state.counter + 1});
@@ -31,4 +27,4 @@ export function counterReducer(state: State = initialState, action: counterActio
         default:
             return state;
     }
-};
+}
